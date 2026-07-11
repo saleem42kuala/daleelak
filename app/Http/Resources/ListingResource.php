@@ -26,6 +26,7 @@ class ListingResource extends JsonResource
             'longitude' => $this->longitude !== null ? (float) $this->longitude : null,
             'overall_rating' => (float) $this->overall_rating,
             'reviews_count' => $this->reviews_count,
+            'promotion_rank' => $this->promotion_rank,
             'is_active' => $this->is_active,
             'cover_photo' => $cover ? Storage::disk('public')->url($cover->path) : null,
             'distance_km' => $this->when(isset($this->distance_km), fn () => round((float) $this->distance_km, 2)),

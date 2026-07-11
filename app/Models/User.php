@@ -21,7 +21,12 @@ class User extends Authenticatable implements FilamentUser
 
     public function canAccessPanel(Panel $panel): bool
     {
-        return $this->is_admin;
+        return $this->is_admin && ! $this->isBanned();
+    }
+
+    public function isBanned(): bool
+    {
+        return $this->banned_at !== null;
     }
 
     /**
@@ -37,6 +42,7 @@ class User extends Authenticatable implements FilamentUser
         'phone',
         'avatar_path',
         'is_admin',
+        'banned_at',
     ];
 
     /**
@@ -60,6 +66,7 @@ class User extends Authenticatable implements FilamentUser
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'is_admin' => 'boolean',
+            'banned_at' => 'datetime',
         ];
     }
 

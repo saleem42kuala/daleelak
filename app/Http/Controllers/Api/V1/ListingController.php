@@ -92,7 +92,12 @@ class ListingController extends Controller
 
             case 'top_rated':
             default:
-                $query->orderByDesc('overall_rating')->orderByDesc('reviews_count');
+                // Promoted listings first (lower rank = higher priority, nulls
+                // last), then by rating, then review count as tiebreaker.
+                $query->orderByRaw('promotion_rank IS NULL') // 0 = promoted first, 1 = not promoted
+                    ->orderBy('promotion_rank')
+                    ->orderByDesc('overall_rating')
+                    ->orderByDesc('reviews_count');
                 break;
         }
     }

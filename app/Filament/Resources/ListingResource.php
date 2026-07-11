@@ -66,6 +66,12 @@ class ListingResource extends Resource
                         Forms\Components\Toggle::make('is_active')
                             ->label('نشط')
                             ->default(true),
+                        Forms\Components\TextInput::make('promotion_rank')
+                            ->label('أولوية الترويج')
+                            ->helperText('الأولوية في الظهور (رقم أصغر = يظهر أولاً، اتركه فارغاً لعدم الترويج)')
+                            ->numeric()
+                            ->minValue(1)
+                            ->columnSpanFull(),
                         Forms\Components\TextInput::make('latitude')
                             ->label('خط العرض')
                             ->numeric(),
@@ -152,6 +158,12 @@ class ListingResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('reviews_count')
                     ->label('المراجعات')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('promotion_rank')
+                    ->label('أولوية الترويج')
+                    ->badge()
+                    ->color('info')
+                    ->placeholder('—')
                     ->sortable(),
                 Tables\Columns\IconColumn::make('is_active')
                     ->label('نشط')

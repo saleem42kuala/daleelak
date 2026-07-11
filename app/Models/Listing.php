@@ -25,6 +25,7 @@ class Listing extends Model
         'longitude',
         'overall_rating',
         'reviews_count',
+        'promotion_rank',
         'is_active',
     ];
 
@@ -34,6 +35,7 @@ class Listing extends Model
             'latitude' => 'decimal:7',
             'longitude' => 'decimal:7',
             'overall_rating' => 'decimal:2',
+            'promotion_rank' => 'integer',
             'is_active' => 'boolean',
         ];
     }
