@@ -36,6 +36,9 @@ class ListingIndexRequest extends FormRequest
     public function messages(): array
     {
         return [
+            'country_id.exists' => 'الدولة المحددة غير موجودة.',
+            'city_id.exists' => 'المدينة المحددة غير موجودة.',
+            'category_id.exists' => 'التصنيف المحدد غير موجود.',
             'sort.in' => 'قيمة الترتيب غير صحيحة.',
             'lat.required_if' => 'خط العرض مطلوب عند الترتيب حسب الأقرب.',
             'lng.required_if' => 'خط الطول مطلوب عند الترتيب حسب الأقرب.',
