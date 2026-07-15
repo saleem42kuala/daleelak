@@ -25,10 +25,14 @@ Route::prefix('v1')->group(function () {
 
     Route::post('auth/social', [AuthController::class, 'social']);
 
+    // REMOVE BEFORE PRODUCTION: dev-only test login (local env only, 403 elsewhere).
+    Route::post('auth/dev-login', [AuthController::class, 'devLogin']);
+
     // --- Authenticated ---
     Route::middleware('auth:sanctum')->group(function () {
         Route::get('user', [AuthController::class, 'me']);
 
+        Route::get('reviews/mine', [ReviewController::class, 'mine']);
         Route::post('reviews', [ReviewController::class, 'store']);
         Route::post('review-votes', [ReviewVoteController::class, 'store']);
 

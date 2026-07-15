@@ -17,6 +17,10 @@ class ReviewResource extends JsonResource
             'comment_ar' => $this->comment_ar,
             'status' => $this->status,
             'created_at' => $this->created_at?->toIso8601String(),
+            'listing' => $this->whenLoaded('listing', fn () => [
+                'id' => $this->listing->id,
+                'name_ar' => $this->listing->name_ar,
+            ]),
             'user' => new UserResource($this->whenLoaded('user')),
             'criteria' => $this->whenLoaded('reviewCriteria', fn () => $this->reviewCriteria->map(fn ($rc) => [
                 'criteria_id' => $rc->criteria_id,

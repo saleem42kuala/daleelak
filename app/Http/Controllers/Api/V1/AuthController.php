@@ -36,6 +36,37 @@ class AuthController extends Controller
     }
 
     /**
+     * REMOVE BEFORE PRODUCTION.
+     *
+     * Dev-only login for testing: finds or creates a user by email and issues a
+     * Sanctum token with the same response shape as social(). Local env only.
+     */
+    public function devLogin(Request $request): JsonResponse
+    {
+        // REMOVE BEFORE PRODUCTION: never expose account impersonation in prod.
+        abort_unless(app()->environment('local'), 403);
+
+        $validated = $request->validate([
+            'email' => ['required', 'email'],
+        ]);
+
+        $user = User::firstOrCreate(
+            ['email' => $validated['email']],
+            [
+                'name' => 'مستخدم تجريبي',
+                'password' => bcrypt(str()->random(40)),
+            ],
+        );
+
+        $token = $user->createToken('dev-login')->plainTextToken;
+
+        return response()->json([
+            'token' => $token,
+            'user' => new UserResource($user),
+        ]);
+    }
+
+    /**
      * The currently authenticated user.
      */
     public function me(Request $request): UserResource

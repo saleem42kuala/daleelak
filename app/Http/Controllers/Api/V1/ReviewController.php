@@ -33,6 +33,22 @@ class ReviewController extends Controller
     }
 
     /**
+     * The authenticated user's own reviews (all statuses), with the listing
+     * they belong to, for the "تقييماتي" section on the account screen.
+     */
+    public function mine(Request $request): AnonymousResourceCollection
+    {
+        $reviews = $request->user()
+            ->reviews()
+            ->with(['listing', 'reviewCriteria.criteria'])
+            ->latest()
+            ->paginate($request->integer('per_page', 15))
+            ->withQueryString();
+
+        return ReviewResource::collection($reviews);
+    }
+
+    /**
      * Submit a review. Persisted as `pending`; the ReviewObserver recalculates
      * the listing's cached aggregates once (and if) it is approved.
      */
